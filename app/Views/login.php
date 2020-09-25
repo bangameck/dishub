@@ -98,6 +98,21 @@
     <!-- inject:js -->
     <script src="<?= base_url(); ?>/assets/vendors/feather-icons/feather.min.js"></script>
     <script src="<?= base_url(); ?>/assets/js/template.js"></script>
+    <script>
+        $("#exampleInputUsername1").on({
+            keydown: function(e) {
+                if (e.which === 32)
+                    return false;
+            },
+            keyup: function() {
+                this.value = this.value.toLowerCase();
+            },
+            change: function() {
+                this.value = this.value.replace(/\s/g, "");
+
+            }
+        });
+    </script>
     <!-- endinject -->
     <!-- custom js for this page -->
     <!-- end custom js for this page -->

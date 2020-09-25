@@ -65,7 +65,14 @@
                                         <td><?= $u['email']; ?></td>
                                         <td><?= $lev[$u['level']]; ?></td>
                                         <td><img src="/_upload/f_usr/<?= $u['foto']; ?>" alt=""></td>
-                                        <td><a href="<?= base_url(); ?>/user/detail/<?= $u['slug']; ?>" class="btn btn-outline-primary"> Detail</td>
+                                        <td><a href="<?= base_url(); ?>/user/<?= $u['slug']; ?>" class="btn btn-outline-primary"> Detail</a>
+                                            <a href="<?= base_url(); ?>/user/edit/<?= $u['slug']; ?>" class="btn btn-outline-warning"> Edit</a>
+                                            <form action="<?= base_url(); ?>/user/<?= $u['id_usr']; ?>" method="post" class="d-inline">
+                                                <?= csrf_field(); ?>
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah yakin ingin menghapus data ini ?')">Delete</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 <?php endforeach ?>
                             </tbody>

@@ -41,4 +41,19 @@
 <script src="<?= base_url(); ?>/assets/js/dashboard.js"></script>
 <script src="<?= base_url(); ?>/assets/js/datepicker.js"></script>
 <script src="<?= base_url(); ?>/assets/js/data-table.js"></script>
+<script>
+    $("#username").on({
+        keydown: function(e) {
+            if (e.which === 32)
+                return false;
+        },
+        keyup: function() {
+            this.value = this.value.toLowerCase();
+        },
+        change: function() {
+            this.value = this.value.replace(/\s/g, "");
+
+        }
+    });
+</script>
 <!-- end custom js for this page -->
