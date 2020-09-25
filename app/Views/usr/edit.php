@@ -21,14 +21,14 @@
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <label class="col-form-label">Nama</label>
-                            <input class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" name="nama" value="<?= $user['nama']; ?>" id="nama" type="text" autofocus>
+                            <input class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" name="nama" value="<?= (old('nama')) ? old('nama') : $user['nama']; ?>" id="nama" type="text" autofocus>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('nama'); ?>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <label class="col-form-label">Username</label>
-                            <input class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" name="username" value="<?= $user['username']; ?>" id="username" type="text">
+                            <input class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" name="username" value="<?= (old('username')) ? old('username') : $user['username']; ?>" id="username" type="text">
                             <div class="invalid-feedback">
                                 <?= $validation->getError('username'); ?>
                             </div>
@@ -37,7 +37,7 @@
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <label class="col-form-label">Email</label>
-                            <input class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" name="email" value="<?= $user['email']; ?>" id="email" type="email">
+                            <input class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" name="email" value="<?= (old('email')) ? old('email') : $user['email']; ?>" id="email" type="email">
                             <div class="invalid-feedback">
                                 <?= $validation->getError('email'); ?>
                             </div>
@@ -50,9 +50,9 @@
                                         '' => 'Pilih Level',
                                         '1' => 'Admin',
                                         '2' => 'Kepala',
-                                        '3' => 'Password'
+                                        '3' => 'Pegawai'
                                     ]; ?>
-                                    <option value="<?= $user['level']; ?>"><?= $lev[$user['level']]; ?></option>
+                                    <option value="<?= (old('level')) ? old('level') : $user['level']; ?>"><?= (old('level')) ? $lev[old('level')] : $lev[$user['level']]; ?></option>
                                     <option value="1">Admin</option>
                                     <option value="2">Kepala</option>
                                     <option value="3">Pegawai</option>

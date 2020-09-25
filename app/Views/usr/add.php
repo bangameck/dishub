@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title"><?= $title; ?></h4>
-                <form class="cmxform" method="post" action="/user/save">
+                <form class="cmxform" method="post" action="/user/save" enctype="multipart/form-data">
                     <?= csrf_field(); ?>
                     <div class="form-group row">
                         <div class="col-lg-12">
@@ -44,7 +44,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="col-form-label">Level</label>
-                                <select class="js-example-basic-single w-100" name="level">
+                                <select class="js-example-basic-single w-100 <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>" name="level">
                                     <?php $lev = [
                                         '' => 'Pilih Level',
                                         '1' => 'Admin',
@@ -56,16 +56,22 @@
                                     <option value="2">Kepala</option>
                                     <option value="3">Pegawai</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('level'); ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-12">
                             <label class="col-form-label">Foto</label>
-                            <input type="file" name="foto" id="myDropify" class="border" />
+                            <input type="file" name="foto" id="myDropify" class="border <?= ($validation->hasError('foto')) ? 'is-invalid' : ''; ?>" />
+                            <div style="color: red;">
+                                <?= $validation->getError('foto'); ?>
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"> Save </button>
+                    <button type=" submit" class="btn btn-primary"> Save </button>
                     <form>
             </div>
         </div>

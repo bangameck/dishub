@@ -79,11 +79,38 @@ class User extends BaseController
                     'required'  => '{field} harus diisi.',
                     'is_unique' => '{field} sudah ada, ganti dengan {field} yang lain.'
                 ]
-            ]
+            ],
+            'level' => [
+                'rules'  => 'decimal',
+                'errors' => [
+                    'decimal' => '{field} Harus diisi.'
+                ]
+            ],
+            'foto' => [
+                'rules'  => 'uploaded[foto]|max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => '{field} tidak boleh kosong.',
+                    'max_size' => 'ukuran maksimal file {field} tidak boleh lebih dari 1 MB.',
+                    'is_image' => '{field} harus berupa gambar',
+                    'mime_in'  => 'ekstensi {field} yang diperbolehkan hanya JPG, JPEG, dan PNG',
+                ]
+            ],
         ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->to('/user/add')->withInput()->with('validation', $validation);
+            // $validation = \Config\Services::validation();
+            // return redirect()->to('/user/add')->withInput()->with('validation', $validation);
+            return redirect()->to('/user/add')->withInput();
         }
+
+
+        //ambil file foto
+        $fileFoto = $this->request->getFile('foto');
+        //ubah nama foto
+        $hash = url_title(tgl_indo(date('Y-m-d')) . '-' . date('H:i:s'), '-', true);
+        $namaFoto = $this->request->getVar('no_peg') . '-' . $this->request->getVar('username') . '-' . $hash;
+        //pidahkan file foto
+        $fileFoto->move('_upload/f_usr', $namaFoto);
+        //cek Foto
+        $foto = $namaFoto;
         $slug = url_title($this->request->getVar('username'), '-', true);
         $data = [
             'no_peg'    => $this->request->getVar('no_peg'),
@@ -93,7 +120,7 @@ class User extends BaseController
             'password'  => '12345678',
             'email'     => $this->request->getVar('email'),
             'level'     => $this->request->getVar('level'),
-            'foto'      => 'default.png'
+            'foto'      => $foto
         ];
         $save =  $this->userModel->save($data);
         // dd($data);
@@ -119,10 +146,23 @@ class User extends BaseController
 
     public function update($id_usr)
     {
-        // dd($this->request->getVar());
+        // cek username lama
+        $userOld = $this->userModel->getUser($this->request->getVar('slug'));
+        if ($userOld['username'] == $this->request->getVar('username')) {
+            $rule_username = 'required';
+        } else {
+            $rule_username = 'required|is_unique[users.username]';
+        }
+        //cek email lama
+        if ($userOld['email'] == $this->request->getVar('email')) {
+            $rule_email = 'required';
+        } else {
+            $rule_email = 'required|is_unique[users.email]';
+        }
+
         if (!$this->validate([
             'username' => [
-                'rules' => 'required|is_unique[users.username]',
+                'rules' => $rule_username,
                 'errors' => [
                     'required'  => '{field} harus diisi.',
                     'is_unique' => '{field} sudah ada, ganti dengan {field} yang lain.'
@@ -135,7 +175,7 @@ class User extends BaseController
                 ]
             ],
             'email' => [
-                'rules' => 'required|is_unique[users.email]',
+                'rules' => $rule_email,
                 'errors' => [
                     'required'  => '{field} harus diisi.',
                     'is_unique' => '{field} sudah ada, ganti dengan {field} yang lain.'
@@ -157,7 +197,7 @@ class User extends BaseController
             'level'     => $this->request->getVar('level'),
             'foto'      => 'default.png'
         ];
-        $update =  $this->userModel->update($data);
+        $update =  $this->userModel->save($data);
         // dd($data);
         if ($update === true) {
             session()->setFlashdata('pesan', 'Data berhasil disimpan');
