@@ -63,15 +63,32 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-lg-12">
-                            <label class="col-form-label">Foto</label>
-                            <input type="file" name="foto" id="myDropify" class="border <?= ($validation->hasError('foto')) ? 'is-invalid' : ''; ?>" />
-                            <div style="color: red;">
-                                <?= $validation->getError('foto'); ?>
+                        <div class="col-lg-3">
+                            <label for="foto" class="col-form-label">Foto</label>
+                            <img src="/_upload/f_usr/default.png" class="img-thumbnail img-preview">
+                        </div>
+                        <div class="col-lg-9">
+                            <label class="col-form-label">Pilih Foto</label>
+                            <input type="file" name="foto" class="file-upload-default" id="foto" onchange="previewImg()">
+                            <div class=" input-group col-xs-12">
+                                <input type="text" class="form-control file-upload-info <?= ($validation->hasError('foto')) ? 'is-invalid' : ''; ?>" disabled="" placeholder="Upload Image" for="foto">
+                                <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                </span>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('foto'); ?>
+                                </div>
                             </div>
+                            <!-- <div class="custom-file">
+                                <input type="file" class="custom-file-input <?= ($validation->hasError('foto')) ? 'is-invalid' : ''; ?>" id="foto" name="foto" onchange="previewImg()">
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('foto'); ?>
+                                </div>
+                                <label class="custom-file-label" for="foto">Pilih Gambar...</label>
+                            </div> -->
                         </div>
                     </div>
-                    <button type=" submit" class="btn btn-primary"> Save </button>
+                    <button type="submit" class="col-lg-12 btn btn-primary"> Save </button>
                     <form>
             </div>
         </div>

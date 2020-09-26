@@ -41,6 +41,7 @@
 <script src="<?= base_url(); ?>/assets/js/dashboard.js"></script>
 <script src="<?= base_url(); ?>/assets/js/datepicker.js"></script>
 <script src="<?= base_url(); ?>/assets/js/data-table.js"></script>
+<script src="<?= base_url(); ?>/assets/js/file-upload.js"></script>
 <script>
     $("#username").on({
         keydown: function(e) {
@@ -55,5 +56,21 @@
 
         }
     });
+</script>
+<script>
+    function previewImg() {
+        const foto = document.querySelector('#foto');
+        const fotoLabel = document.querySelector('.file-upload-info');
+        const imgPreview = document.querySelector('.img-preview');
+
+        fotoLabel.textContent = foto.files[0].name;
+
+        const fileFoto = new FileReader();
+        fileFoto.readAsDataURL(foto.files[0]);
+
+        fileFoto.onload = function(e) {
+            imgPreview.src = e.target.result;
+        }
+    }
 </script>
 <!-- end custom js for this page -->
