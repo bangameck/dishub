@@ -208,7 +208,10 @@ class User extends BaseController
             //pidahkan file foto
             $fileFoto->move('_upload/f_usr', $namaFoto . '.' . $ekstensiFoto);
             //hapus foto lama
-            unlink('_upload/f_usr/' . $fotoLama);
+            if ($fotoLama != 'default.png') {
+                unlink('_upload/f_usr/' . $fotoLama);
+            }
+
             //cek Foto
             $foto = $namaFoto . '.' . $ekstensiFoto;
         }
