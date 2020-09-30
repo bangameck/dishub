@@ -121,7 +121,7 @@ class User extends BaseController
             'slug'      => $slug,
             'username'  => $this->request->getVar('username'),
             'nama'      => $this->request->getVar('nama'),
-            'password'  => '12345678',
+            'password'  => password_hash('12345678', PASSWORD_DEFAULT),
             'email'     => $this->request->getVar('email'),
             'level'     => $this->request->getVar('level'),
             'foto'      => $foto

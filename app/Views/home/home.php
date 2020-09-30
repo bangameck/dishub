@@ -15,7 +15,7 @@
     <?php endif; ?>
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
-            <h4 class="mb-3 mb-md-0">Hai <?= session()->get('nama'); ?>, Welcome to Dashboard</h4>
+            <h4 class="mb-3 mb-md-0">Hai <?= session()->get('nama'); ?></h4>
         </div>
 
         <div class="d-flex align-items-center flex-wrap text-nowrap">

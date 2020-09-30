@@ -15,7 +15,8 @@ class Login extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Login | Web Dishub Pku'
+            'title' => 'Login | Web Dishub Pku',
+            'validation' => \Config\Services::validation(),
         ];
         // $userModel = new UserModel();
         // $user = $userModel->findAll();
@@ -26,18 +27,20 @@ class Login extends BaseController
     public function auth()
     {
         //pengambilan data dari form
+        //dd($this->request->getVar());
         $loginModel = new LoginModel;
+
         $u = $this->request->getVar('username');
         $p = $this->request->getVar('password');
 
-        //cek keBD
+        //cek keDB
         $cek = $loginModel->cek_login($u, $p);
 
         if ($cek == null) {
-            session()->setFlashdata('pesan', 'Username atau password anda salah');
-            return redirect()->to('/');
+            session()->setFlashdata('pesan', 'Username anda salah');
+            return redirect()->to('/')->withInput();
         }
-        if ($p == $cek->password) {
+        if ($p == password_verify($p, $cek->password)) {
             $data = [
                 'nama' => $cek->nama,
                 'username' => $cek->username,
@@ -59,7 +62,7 @@ class Login extends BaseController
             }
         } else {
             session()->setFlashdata('pesan', 'Password Salah..');
-            return redirect()->to(base_url('/'));
+            return redirect()->to('/')->withInput();
         }
     }
     // redirect ke halaman masing2

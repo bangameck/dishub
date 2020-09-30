@@ -56,9 +56,10 @@
                                         <a href="#" class="noble-ui-logo d-block mb-2">Web<span>TEST</span></a>
                                         <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
                                         <form class="forms-sample" method="POST" action="<?= base_url(); ?>/login/auth">
+                                            <?= csrf_field(); ?>
                                             <div class="form-group">
                                                 <label for="exampleInputUsername1">Username</label>
-                                                <input type="text" name="username" class="form-control" id="exampleInputUsername1" autocomplete="current-password" placeholder="Password" required>
+                                                <input type="text" name="username" value="<?= old('username'); ?>" class="form-control" id="exampleInputUsername1" autocomplete="current-password" placeholder="Password" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Password</label>
