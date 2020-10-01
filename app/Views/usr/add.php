@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title"><?= $title; ?></h4>
-                <form class="cmxform" method="post" action="/user/save" enctype="multipart/form-data">
+                <form class="cmxform" method="post" action="<?= base_url(); ?>/user/save" enctype="multipart/form-data">
                     <?= csrf_field(); ?>
                     <div class="form-group row">
                         <div class="col-lg-12">
@@ -65,7 +65,7 @@
                     <div class="form-group row">
                         <div class="col-lg-3">
                             <label for="foto" class="col-form-label">Foto</label>
-                            <img src="/_upload/f_usr/default.png" class="img-thumbnail img-preview">
+                            <img src="<?= base_url(); ?>/_upload/f_usr/default.png" class="img-thumbnail img-preview">
                         </div>
                         <div class="col-lg-9">
                             <label class="col-form-label">Pilih Foto</label>

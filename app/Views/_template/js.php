@@ -1,5 +1,5 @@
 <!-- core:js -->
-<script src="/assets/vendors/core/core.js"></script>
+<script src="<?= base_url(); ?>/assets/vendors/core/core.js"></script>
 <!-- endinject -->
 <!-- plugin js for this page -->
 <script src="<?= base_url(); ?>/assets/vendors/jquery-validation/jquery.validate.min.js"></script>

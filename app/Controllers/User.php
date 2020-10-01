@@ -97,7 +97,7 @@ class User extends BaseController
         ])) {
             // $validation = \Config\Services::validation();
             // return redirect()->to('/user/add')->withInput()->with('validation', $validation);
-            return redirect()->to('/user/add')->withInput();
+            return redirect()->to(base_url('/user/add'))->withInput();
         }
 
 
@@ -130,10 +130,10 @@ class User extends BaseController
         // dd($data);
         if ($save === true) {
             session()->setFlashdata('pesan', 'Data berhasil disimpan');
-            return redirect()->to('/user');
+            return redirect()->to(base_url('/user'));
         } else {
             session()->setFlashdata('pesan_gagal', 'Data Gagal disimpan');
-            return redirect()->to('/user');
+            return redirect()->to(base_url('/user'));
         }
     }
 
@@ -194,7 +194,7 @@ class User extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('/user/edit/' . $this->request->getVar('slug'))->withInput();
+            return redirect()->to(base_url('/user/edit/' . $this->request->getVar('slug')))->withInput();
         }
 
         $fileFoto = $this->request->getFile('foto');
@@ -232,10 +232,10 @@ class User extends BaseController
         // dd($data);
         if ($update === true) {
             session()->setFlashdata('pesan', 'Data berhasil disimpan');
-            return redirect()->to('/user');
+            return redirect()->to(base_url('/user'));
         } else {
             session()->setFlashdata('pesan_gagal', 'Data Gagal disimpan');
-            return redirect()->to('/user');
+            return redirect()->to(base_url('/user'));
         }
     }
 
@@ -247,6 +247,6 @@ class User extends BaseController
             unlink('_upload/f_usr/' . $user['foto']);
         }
         session()->setFlashdata('pesan', 'Data Berhasil di hapus');
-        return redirect()->to('/user');
+        return redirect()->to(base_url('/user'));
     }
 }
