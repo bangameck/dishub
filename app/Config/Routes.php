@@ -31,11 +31,20 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+//index
 $routes->get('/', 'Login::index');
+//user
 $routes->get('/user/add', 'User::add');
 $routes->get('/user/edit/(:segment)', 'User::edit/$1');
 $routes->delete('/user/(:num)', 'User::hapus/$1');
 $routes->get('/user/(:any)', 'User::detail/$1');
+//bidang
+$routes->get('/bidang/add', 'Bidang::add');
+$routes->get('/bidang/edit/(:segment)', 'Bidang::edit/$1');
+$routes->delete('/bidang/(:num)', 'Bidang::hapus/$1');
+$routes->get('/bidang/(:any)', 'Bidang::detail/$1');
+//logout
 $routes->get('/out', 'Login::out');
 
 

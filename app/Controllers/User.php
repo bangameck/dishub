@@ -21,7 +21,7 @@ class User extends BaseController
         // $user = $this->userModel->findAll();
 
         $data = [
-            'title' => 'User Page',
+            'title' => 'Tabel User',
             'user' => $this->userModel->getUser(),
         ];
 
