@@ -42,31 +42,32 @@
                                     <th>No.</th>
                                     <th>Nama Bidang</th>
                                     <th>Inisial</th>
+                                    <th>Logo</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1;
-                                $lev = [
-                                    '0' => 'null',
-                                    '1' => 'Admin',
-                                    '2' => 'Kepala',
-                                    '3' => 'Pegawai'
-                                ];
                                 foreach ($bidang as $b) :
                                 ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
                                         <td><?= $b['nm_bidang']; ?></td>
                                         <td><?= $b['initial']; ?></td>
-                                        <td><img src="<?= base_url(); ?>/_upload/logo/<?= $b['logo']; ?>" alt=""></td>
-                                        <td><a href="<?= base_url(); ?>/bidang/<?= $b['slug']; ?>" class="btn btn-outline-primary"> Detail</a>
-                                            <a href="<?= base_url(); ?>/bidang/edit/<?= $b['slug']; ?>" class="btn btn-outline-warning"> Edit</a>
-                                            <form action="<?= base_url(); ?>/bidang/<?= $b['id_bidang']; ?>" method="post" class="d-inline">
-                                                <?= csrf_field(); ?>
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah yakin ingin menghapus data ini ?')">Delete</button>
-                                            </form>
+                                        <td><img src="<?= base_url(); ?>/_upload/logo/<?= $b['foto']; ?>" alt=""></td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <a class="dropdown-item" href="<?= base_url(); ?>/bidang/<?= $b['slug']; ?>">Detail</a>
+                                                    <a class="dropdown-item" href="<?= base_url(); ?>/bidang/edit/<?= $b['slug']; ?>">Edit</a>
+                                                    <form action="<?= base_url(); ?>/bidang/<?= $b['id_bidang']; ?>" method="post" class="d-inline">
+                                                        <?= csrf_field(); ?>
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Apakah yakin ingin menghapus data ini ?')">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>

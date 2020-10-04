@@ -65,14 +65,28 @@
                                         <td><?= $u['email']; ?></td>
                                         <td><?= $lev[$u['level']]; ?></td>
                                         <td><img src="<?= base_url(); ?>/_upload/f_usr/<?= $u['foto']; ?>" alt=""></td>
-                                        <td><a href="<?= base_url(); ?>/user/<?= $u['slug']; ?>" class="btn btn-outline-primary"> Detail</a>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <a class="dropdown-item" href="<?= base_url(); ?>/user/<?= $u['slug']; ?>">Detail</a>
+                                                    <a class="dropdown-item" href="<?= base_url(); ?>/user/edit/<?= $u['slug']; ?>">Edit</a>
+                                                    <form action="<?= base_url(); ?>/user/<?= $u['id_usr']; ?>" method="post" class="d-inline">
+                                                        <?= csrf_field(); ?>
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Apakah yakin ingin menghapus data ini ?')">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!-- <td><a href="<?= base_url(); ?>/user/<?= $u['slug']; ?>" class="btn btn-outline-primary"> Detail</a>
                                             <a href="<?= base_url(); ?>/user/edit/<?= $u['slug']; ?>" class="btn btn-outline-warning"> Edit</a>
                                             <form action="<?= base_url(); ?>/user/<?= $u['id_usr']; ?>" method="post" class="d-inline">
                                                 <?= csrf_field(); ?>
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah yakin ingin menghapus data ini ?')">Delete</button>
                                             </form>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 <?php endforeach ?>
                             </tbody>

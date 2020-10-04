@@ -16,7 +16,7 @@ class BidangModel extends Model
     public function getBidang($slug = false)
     {
         if ($slug == false) {
-            return $this->findAll();
+            return $this->orderBy('nm_bidang', 'ASC')->findAll();
         }
 
         return $this->where(['slug' => $slug])->first();

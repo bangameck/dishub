@@ -56,8 +56,22 @@
 
         }
     });
-</script>
-<script>
+
+    $("#initial").on({
+        keydown: function(e) {
+            if (e.which === 32)
+                return false;
+        },
+        keyup: function() {
+            this.value = this.value.toUpperCase();
+        },
+        change: function() {
+            this.value = this.value.replace(/\s/g, "");
+
+        }
+    });
+
+    //image preview
     function previewImg() {
         const foto = document.querySelector('#foto');
         const fotoLabel = document.querySelector('.file-upload-info');
@@ -72,5 +86,8 @@
             imgPreview.src = e.target.result;
         }
     }
+</script>
+<script>
+
 </script>
 <!-- end custom js for this page -->

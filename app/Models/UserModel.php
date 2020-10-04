@@ -16,7 +16,7 @@ class UserModel extends Model
     public function getUser($slug = false)
     {
         if ($slug == false) {
-            return $this->findAll();
+            return $this->orderBy('nama', 'ASC')->findAll();
         }
 
         return $this->where(['slug' => $slug])->first();
