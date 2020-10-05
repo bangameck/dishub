@@ -58,9 +58,8 @@ class Bidang extends BaseController
                 ]
             ],
             'foto' => [
-                'rules'  => 'max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+                'rules'  => 'is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'max_size' => 'ukuran maksimal file {field} tidak boleh lebih dari 1 MB.',
                     'is_image' => '{field} harus berupa gambar',
                     'mime_in'  => 'ekstensi {field} yang diperbolehkan hanya JPG, JPEG, dan PNG',
                 ]
@@ -74,16 +73,31 @@ class Bidang extends BaseController
 
         //ambil file foto
         $fileFoto = $this->request->getFile('foto');
+        //$fileName = $fileFoto->getName();
         $ekstensiFoto = $fileFoto->guessExtension();
+        $image = \Config\Services::image();
         if ($fileFoto->getError() == 4) {
             $foto = 'default.png';
         } else {
             $hash = url_title($this->request->getVar('nm_bidang') . '-' . tgl_indo(date('Y-m-d')) . '-' . date('H:i:s'), '-', true);
             $namaFoto = $this->request->getVar('initial') . '-' . $hash;
             //pidahkan file foto
-            $fileFoto->move('_upload/logo', $namaFoto . '.' . $ekstensiFoto);
+            //$fileFoto->move('_upload/logo', $namaFoto . '.' . $ekstensiFoto);
             //cek Foto
             $foto = $namaFoto . '.' . $ekstensiFoto;
+            //membuat thumbnail
+            //$file = '_upload/logo/' . $foto;
+            $image->withFile($fileFoto)
+                ->text('Copyright' . date('Y') . 'Dishub App |' . tgl_indo(date('Y-m-d')), [
+                    'color'      => '#0099ff',
+                    'opacity'    => 0.1,
+                    'withShadow' => true,
+                    'hAlign'     => 'center',
+                    'vAlign'     => 'middle',
+                    'fontSize'   => 20
+                ])
+                ->resize(500, 400, true, 'height')
+                ->save('_upload/logo/' . $foto);
         }
 
         $slug = url_title($this->request->getVar('initial'), '-', true);
@@ -140,9 +154,8 @@ class Bidang extends BaseController
                 ]
             ],
             'foto' => [
-                'rules'  => 'max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+                'rules'  => 's_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'max_size' => 'ukuran maksimal file {field} tidak boleh lebih dari 1 MB.',
                     'is_image' => '{field} harus berupa gambar',
                     'mime_in'  => 'ekstensi {field} yang diperbolehkan hanya JPG, JPEG, dan PNG',
                 ]
@@ -154,6 +167,7 @@ class Bidang extends BaseController
         $fileFoto       = $this->request->getFile('foto');
         $ekstensiFoto   = $fileFoto->guessExtension();
         $fotoLama       = $this->request->getVar('fotoLama');
+        $image          = \Config\Services::image();
         $bidang         = $this->request->getVar('nm_bidang');
         if ($fileFoto->getError() == 4) {
             $foto = $fotoLama;
@@ -161,14 +175,23 @@ class Bidang extends BaseController
             $hash = url_title($bidang . '-' . tgl_indo(date('Y-m-d')) . '-' . date('H:i:s'), '-', true);
             $namaFoto = $this->request->getVar('initial') . '-' . $hash;
             //pidahkan file foto
-            $fileFoto->move('_upload/logo', $namaFoto . '.' . $ekstensiFoto);
+            //$fileFoto->move('_upload/logo', $namaFoto . '.' . $ekstensiFoto);
+            $foto = $namaFoto . '.' . $ekstensiFoto;
+            $image->withFile($fileFoto)
+                ->text('Copyright' . date('Y') . 'Dishub App |' . tgl_indo(date('Y-m-d')), [
+                    'color'      => '#0099ff',
+                    'opacity'    => 0.1,
+                    'withShadow' => true,
+                    'hAlign'     => 'center',
+                    'vAlign'     => 'middle',
+                    'fontSize'   => 20
+                ])
+                ->resize(500, 400, true, 'height')
+                ->save('_upload/logo/' . $foto);
             //hapus foto lama
             if ($fotoLama != 'default.png') {
                 unlink('_upload/logo/' . $fotoLama);
             }
-
-            //cek Foto
-            $foto = $namaFoto . '.' . $ekstensiFoto;
         }
 
         $slug = url_title($this->request->getVar('initial'), '-', true);
@@ -195,7 +218,8 @@ class Bidang extends BaseController
         $bidang = $this->bidangModel->find($id_bidang);
         $this->bidangModel->delete($id_bidang);
         if ($bidang['foto'] != 'default.png') {
-            unlink('_upload/logo/' . $bidang['foto']);
+            $path = '_upload/logo/' . $bidang['foto'];
+            unlink($path);
         }
         session()->setFlashdata('pesan', 'Data Berhasil di hapus');
         return redirect()->to(base_url('/bidang'));

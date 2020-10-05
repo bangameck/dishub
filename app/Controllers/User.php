@@ -87,9 +87,8 @@ class User extends BaseController
                 ]
             ],
             'foto' => [
-                'rules'  => 'max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+                'rules'  => 'is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'max_size' => 'ukuran maksimal file {field} tidak boleh lebih dari 1 MB.',
                     'is_image' => '{field} harus berupa gambar',
                     'mime_in'  => 'ekstensi {field} yang diperbolehkan hanya JPG, JPEG, dan PNG',
                 ]
@@ -102,17 +101,29 @@ class User extends BaseController
 
 
         //ambil file foto
-        $fileFoto = $this->request->getFile('foto');
-        $ekstensiFoto = $fileFoto->guessExtension();
+        $fileFoto       = $this->request->getFile('foto');
+        $image          = \Config\Services::image();
+        $ekstensiFoto   = $fileFoto->guessExtension();
         if ($fileFoto->getError() == 4) {
             $foto = 'default.png';
         } else {
             $hash = url_title(tgl_indo(date('Y-m-d')) . '-' . date('H:i:s'), '-', true);
             $namaFoto = $this->request->getVar('no_peg') . '-' . $this->request->getVar('username') . '-' . $hash;
             //pidahkan file foto
-            $fileFoto->move('_upload/f_usr', $namaFoto . '.' . $ekstensiFoto);
+            //$fileFoto->move('_upload/f_usr', $namaFoto . '.' . $ekstensiFoto);
             //cek Foto
             $foto = $namaFoto . '.' . $ekstensiFoto;
+            $image->withFile($fileFoto)
+                ->text('Copyright' . date('Y') . 'Dishub App |' . tgl_indo(date('Y-m-d')), [
+                    'color'      => '#0099ff',
+                    'opacity'    => 0.1,
+                    'withShadow' => true,
+                    'hAlign'     => 'center',
+                    'vAlign'     => 'middle',
+                    'fontSize'   => 20
+                ])
+                ->resize(500, 400, true, 'height')
+                ->save('_upload/f_usr/' . $foto);
         }
 
         $slug = url_title($this->request->getVar('username'), '-', true);
@@ -186,9 +197,8 @@ class User extends BaseController
                 ]
             ],
             'foto' => [
-                'rules'  => 'max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+                'rules'  => 'is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'max_size' => 'ukuran maksimal file {field} tidak boleh lebih dari 1 MB.',
                     'is_image' => '{field} harus berupa gambar',
                     'mime_in'  => 'ekstensi {field} yang diperbolehkan hanya JPG, JPEG, dan PNG',
                 ]
@@ -197,23 +207,33 @@ class User extends BaseController
             return redirect()->to(base_url('/user/edit/' . $this->request->getVar('slug')))->withInput();
         }
 
-        $fileFoto = $this->request->getFile('foto');
-        $ekstensiFoto = $fileFoto->guessExtension();
-        $fotoLama = $this->request->getVar('fotoLama');
+        $fileFoto       = $this->request->getFile('foto');
+        $ekstensiFoto   = $fileFoto->guessExtension();
+        $image          = \Config\Services::image();
+        $fotoLama       = $this->request->getVar('fotoLama');
         if ($fileFoto->getError() == 4) {
             $foto = $fotoLama;
         } else {
             $hash = url_title(tgl_indo(date('Y-m-d')) . '-' . date('H:i:s'), '-', true);
             $namaFoto = $this->request->getVar('no_peg') . '-' . $this->request->getVar('username') . '-' . $hash;
             //pidahkan file foto
-            $fileFoto->move('_upload/f_usr', $namaFoto . '.' . $ekstensiFoto);
+            //$fileFoto->move('_upload/f_usr', $namaFoto . '.' . $ekstensiFoto);
+            $foto = $namaFoto . '.' . $ekstensiFoto;
+            $image->withFile($fileFoto)
+                ->text('Copyright' . date('Y') . 'Dishub App |' . tgl_indo(date('Y-m-d')), [
+                    'color'      => '#0099ff',
+                    'opacity'    => 0.1,
+                    'withShadow' => true,
+                    'hAlign'     => 'center',
+                    'vAlign'     => 'middle',
+                    'fontSize'   => 20
+                ])
+                ->resize(500, 400, true, 'height')
+                ->save('_upload/f_usr/' . $foto);
             //hapus foto lama
             if ($fotoLama != 'default.png') {
                 unlink('_upload/f_usr/' . $fotoLama);
             }
-
-            //cek Foto
-            $foto = $namaFoto . '.' . $ekstensiFoto;
         }
 
         $slug = url_title($this->request->getVar('username'), '-', true);
