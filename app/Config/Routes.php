@@ -44,6 +44,12 @@ $routes->get('/bidang/add', 'Bidang::add');
 $routes->get('/bidang/edit/(:segment)', 'Bidang::edit/$1');
 $routes->delete('/bidang/(:num)', 'Bidang::hapus/$1');
 $routes->get('/bidang/(:any)', 'Bidang::detail/$1');
+//bagian
+//bidang
+$routes->get('/bagian/add', 'Bagian::add');
+$routes->get('/bagian/edit/(:segment)', 'Bagian::edit/$1');
+$routes->delete('/bagian/(:num)', 'Bagian::hapus/$1');
+$routes->get('/bagian/(:any)', 'Bagian::detail/$1');
 //logout
 $routes->get('/out', 'Login::out');
 

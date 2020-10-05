@@ -30,6 +30,22 @@ class Bidang extends BaseController
         return view('bidang/bidang', $data);
     }
 
+    public function detail($slug)
+    {
+        $data = [
+            'title' => 'Detail Bidang',
+            'bidang' => $this->bidangModel->getBidang($slug),
+
+        ];
+
+        //jika user tida ada
+        if (empty($data['bidang'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Bidang "' . $slug . '" tidak ditemukan');
+        }
+
+        return view('bidang/detail', $data);
+    }
+
     public function add()
     {
         $data = [
