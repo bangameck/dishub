@@ -42,6 +42,59 @@
 <script src="<?= base_url(); ?>/assets/js/datepicker.js"></script>
 <script src="<?= base_url(); ?>/assets/js/data-table.js"></script>
 <script src="<?= base_url(); ?>/assets/js/file-upload.js"></script>
+
+<script>
+
+$("#kendaraan").change(function(){
+
+    // variabel dari nilai combo box kendaraan
+    var id_kendaraan = $("#kendaraan").val();
+
+    // Menggunakan ajax untuk mengirim dan dan menerima data dari server
+    $.ajax({
+        url : "<?php echo base_url();?>/kendaraan/get_merk",
+        method : "POST",
+        data : {id_kendaraan:id_kendaraan},
+        async : false,
+        dataType : 'json',
+        success: function(data){
+            var html = '';
+            var i;
+
+            for(i=0; i<data.length; i++){
+                html += '<option value='+data[i].id_merk_kendaraan+'>'+data[i].merk_kendaraan+'</option>';
+            }
+            $('#merk').html(html);
+
+        }
+    });
+});
+
+$('#id_bidang').change(function(){
+
+    // variabel dari nilai combo box kendaraan
+    var id_bidang = $('#id_bidang').val();
+
+    // Menggunakan ajax untuk mengirim dan dan menerima data dari server
+    $.ajax({
+        url : "<?php echo base_url();?>/bb_u/get_bagian",
+        method : "POST",
+        data : {id_bidang:id_bidang},
+        async : false,
+        dataType : 'json',
+        success: function(data){
+            var html = '';
+            var i;
+
+            for(i=0; i<data.length; i++){
+                html += '<option value='+data[i].id_bagian+'>'+data[i].nm_bagian+'</option>';
+            }
+            $('#id_bagian').html(html);
+
+        }
+    });
+});
+</script>
 <script>
     $("#username").on({
         keydown: function(e) {

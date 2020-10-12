@@ -56,7 +56,18 @@ class BaseController extends Controller
 		// 	}
 		// }
 
+		function auth_admin()
+		{
+			if (session()->get('level') !== '1') {
+				//return redirect()->to(base_url('/home'));
+				throw new \CodeIgniter\Exceptions\PageNotFoundException();
+			}
+		}
 
+		function img_comp()
+		{
+			\Config\Services::image();
+		}
 		function tgl_indo($tanggal)
 		{
 			$bulan = array(

@@ -29,4 +29,14 @@ class UserModel extends Model
         $no_peg = $cek_nopeg->get()->getRow;
         return $no_peg;
     }
+
+    public function getBidang()
+    {
+        $this->db->table('bidang')->get()->getResultArray();
+    }
+
+    public function getBagian()
+    {
+        $this->db->table('bagian')->get()->getResultArray();
+    }
 }

@@ -39,12 +39,17 @@ $routes->get('/user/add', 'User::add');
 $routes->get('/user/edit/(:segment)', 'User::edit/$1');
 $routes->delete('/user/(:num)', 'User::hapus/$1');
 $routes->get('/user/(:any)', 'User::detail/$1');
+//user_bidang_bagian
+$routes->get('/bb_u/add', 'Bb_u::add');
+$routes->get('/bb_u/get_bagian', 'Bb_u::get_bagian');
+$routes->get('/bb_u/edit/(:segment)', 'Bb_u::edit/$1');
+$routes->delete('/bb_u/(:num)', 'Bb_u::hapus/$1');
+$routes->get('/bb_u/(:any)', 'Bb_u::detail');
 //bidang
 $routes->get('/bidang/add', 'Bidang::add');
 $routes->get('/bidang/edit/(:segment)', 'Bidang::edit/$1');
 $routes->delete('/bidang/(:num)', 'Bidang::hapus/$1');
 $routes->get('/bidang/(:any)', 'Bidang::detail/$1');
-//bagian
 //bidang
 $routes->get('/bagian/add', 'Bagian::add');
 $routes->get('/bagian/edit/(:segment)', 'Bagian::edit/$1');

@@ -25,4 +25,5 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/demo_1/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="<?= base_url(); ?>/assets/images/favicon.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>

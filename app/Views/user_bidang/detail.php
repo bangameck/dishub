@@ -9,7 +9,7 @@
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Tables</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data Table</li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $title; ?> </li>
         </ol>
     </nav>
 
@@ -17,9 +17,16 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Tabel User</h6>
-                    <a href="<?= base_url(); ?>/user/add" type="button" class="btn btn-primary mb-3">Tambah user</a>
-                    <?php if (session()->getFlashdata('pesan_gagal')) : ?>
+                    <h6 class="card-title"><?= $title; ?></h6>
+                    <form action="<?= base_url(); ?>/bb_u/add" method="post">
+                        <input type="hidden" name="username" value="<?= $username; ?>">
+                        <button type="sumbit" class="btn btn-primary mb-3"> Tambah Data</button>
+                    </form>
+                    <?php
+
+                    use function App\Controllers\tgl_indo;
+
+                    if (session()->getFlashdata('pesan_gagal')) : ?>
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>Terjadi Kesalahan!</strong> <?= session()->getFlashdata('pesan_gagal'); ?>.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -41,30 +48,26 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Level</th>
-                                    <th>Foto</th>
+                                    <th>Bidang</th>
+                                    <th>Bagian</th>
+                                    <th>Jabatan</th>
+                                    <th>Tgl. Mutasi</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1;
-                                $lev = [
-                                    '0' => 'null',
-                                    '1' => 'Admin',
-                                    '2' => 'Kepala',
-                                    '3' => 'Pegawai'
-                                ];
-                                foreach ($user as $u) :
+                                foreach ($user_bagian as $u) :
+                                    $tgl_mutasi = tgl_indo(date($u['y'] . '-' . $u['m'] . '-' . $u['d']));
+
                                 ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
                                         <td><?= $u['nama']; ?></td>
-                                        <td><?= $u['username']; ?></td>
-                                        <td><?= $u['email']; ?></td>
-                                        <td><?= $lev[$u['level']]; ?></td>
-                                        <td><img src="<?= base_url(); ?>/_upload/f_usr/<?= $u['foto']; ?>" alt=""></td>
+                                        <td><?= $u['nm_bidang']; ?></td>
+                                        <td><?= $u['nm_bagian']; ?></td>
+                                        <td><?= $u['jabatan']; ?></td>
+                                        <td><?= $tgl_mutasi; ?></td>
                                         <td>
                                             <div class="btn-group" role="group">
                                                 <button id="btnGroupDrop1" type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>

@@ -18,13 +18,42 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item nav-category">Data Master</li>
             <li class="nav-item">
+                <a href="<?= base_url(); ?>/anggota" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Daftar Anggota</span>
+                </a>
+            </li>
+            <li class="nav-item nav-category">Data Kompleks</li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#users" role="button" aria-expanded="false" aria-controls="users">
+                    <i class="link-icon" data-feather="users"></i>
+                    <span class="link-title">User</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="users">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="<?= base_url(); ?>/user" class="nav-link">User Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url(); ?>/bb_u" class="nav-link">User Bidang dan Bagian</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a href="<?= base_url(); ?>/usr_dapri" class="nav-link">User Data Pribadi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url(); ?>/usr_dapen" class="nav-link">User Data Pendidikan</a>
+                        </li> -->
+                    </ul>
+                </div>
+            </li>
+            <!-- <li class="nav-item">
                 <a href="<?= base_url(); ?>/user" class="nav-link">
                     <i class="link-icon" data-feather="users"></i>
                     <span class="link-title">Users</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
                     <i class="link-icon" data-feather="settings"></i>

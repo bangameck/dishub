@@ -13,13 +13,11 @@ class User extends BaseController
     public function __construct()
     {
         $this->userModel = new UserModel();
-        //validasi
-
     }
     public function index()
     {
         // $user = $this->userModel->findAll();
-
+        auth_admin();
         $data = [
             'title' => 'Tabel User',
             'user' => $this->userModel->getUser(),
@@ -48,6 +46,7 @@ class User extends BaseController
 
     public function add()
     {
+        auth_admin();
         $data = [
             'title' => 'Halaman Tambah Data User',
             'validation' => \Config\Services::validation(),
@@ -150,6 +149,7 @@ class User extends BaseController
 
     public function edit($slug)
     {
+        auth_admin();
         $data = [
             'title' => 'Halaman Edit Data User',
             'validation' => \Config\Services::validation(),
@@ -268,5 +268,20 @@ class User extends BaseController
         }
         session()->setFlashdata('pesan', 'Data Berhasil di hapus');
         return redirect()->to(base_url('/user'));
+    }
+
+    //--------------------------------------------User-Data-dan-Bagian--------------------------------------------------
+
+    public function usr_b()
+    {
+        auth_admin();
+        $data = [
+            'title' => 'Tabel User',
+            'user' => $this->userModel->getUser(),
+        ];
+
+        //dd($user);
+
+        return view('usr/user_b', $data);
     }
 }
